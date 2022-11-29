@@ -1,0 +1,4 @@
+1. 5G from ACC to KMS
+Total flights: 1
+Total additional stops: 0
+Optimality Criteria: Flights
