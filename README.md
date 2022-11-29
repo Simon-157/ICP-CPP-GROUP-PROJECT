@@ -29,7 +29,7 @@ cd ICP-CPP-PROJECT
 ```
 
 ## Starting the program
-This is the critical stage where you will need to run the following option to link the header files with the cpp files to tell the compiler where to locate any included headers.
+### This is the critical stage where you will need to run the following option to link the header files with the cpp files to tell the compiler where to locate any included headers.
 This is the code to link the header files with the cpp files in the project directory. Make sure your are in the project source folder and run the following in the terminal to link the files
 
 ```bash
