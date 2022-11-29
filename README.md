@@ -1,5 +1,6 @@
 # ICP-CPP-PROJECT
 # FLIGHT ROUTE SEARCHING 
+## NB: IMPORTANT, All files used in this project utilized the absolute path, hence any file not found exception requires you to check the locations of the test files and the data files in your working directory.
 
 This is program that takes in a start position on any part of the earth geographical area and searches for an optimal path to a given destination in the globe through flight with distance optimality( for A*) and number of flights( for BFS)
 
