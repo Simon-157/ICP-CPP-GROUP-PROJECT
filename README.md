@@ -11,6 +11,7 @@ This is program that takes in a start position on any part of the earth geograph
 All other cpp files are within the home directory of the project together with the input file with the start and destination details
 
 ## Running Tests
+* All you have to do is to change the filname within the constructor for FlightRoutes test("ibadan-accra.txt") to the file with the test data.
 ![image](https://user-images.githubusercontent.com/79936608/204668589-35ae4189-b6a1-465f-9bd3-063b7541979b.png)
 
 
