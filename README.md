@@ -4,9 +4,9 @@
 This is program that takes in a start position on any part of the earth geographical area and searches for an optimal path to a given destination in the globe through flight with distance optimality( for A*) and number of flights( for BFS)
 
 ## Project Structure
-output folder: contains output files for the results of test cases
-helper folder: contains the helper files for the classes
-utils folder: contains the data files 
+* output folder: contains output files for the results of test cases
+* helper folder: contains the helper files for the classes
+* utils folder: contains the data files 
 
 All other cpp files are within the home directory of the project together with the input file with the start and destination details
 
