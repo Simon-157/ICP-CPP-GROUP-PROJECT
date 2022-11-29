@@ -25,13 +25,15 @@ public:
    stack<Vertex *> getSolutionPath();
    void writeToFile(string filename);
    int getStops();
-   bool operator==(Vertex *node)
+
+   bool operator==(Vertex *rhs)
    {
-      if (this->airport->getIataCode() == node->getAirport()->getIataCode())
-      {
-         return true;
-      }
-      return false;
+      return this->getAirline()->getIataCode() == rhs->getAirline()->getIataCode();
+   }
+
+   bool operator!=(Vertex *rhs)
+   {
+      return !(*rhs == this);
    }
 
    operator string()

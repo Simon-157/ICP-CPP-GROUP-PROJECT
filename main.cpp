@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-  FlightRoutes test("ghardaia-accra.txt");
+  FlightRoutes test("accra-abuja.txt");
   test.getStartAndEndDetails();
   cout << "Test for flight route with pointers --------------------------------" << endl;
   unordered_map<string, Airport *> search = test.getSourceAndDestinationAirportDetails();

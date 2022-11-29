@@ -2,7 +2,6 @@
 #include <stack>
 #include <iostream>
 #include <fstream>
-using namespace std;
 
 Vertex::Vertex(Vertex *parent, Airport *airport, Airline *airline, int stops)
 {
@@ -56,14 +55,16 @@ void Vertex::writeToFile(string filename)
    cout << "------------" << endl
         << "wait while program outputs result to file" << endl;
    stack<Vertex *> results = this->getSolutionPath();
-   int totalFlights = results.size() - 1;
    ofstream outputfile("outputs/" + filename + "_output.txt");
+   int totalFlights = results.size() - 1;
    int index = 0;
+   int totalStops = 0;
    if (outputfile.is_open())
    {
       while (!results.empty())
       {
          Vertex *vertex = results.top();
+         totalStops = totalStops + vertex->getStops();
          results.pop();
          if (vertex->getParent() != NULL)
          {
@@ -83,8 +84,8 @@ void Vertex::writeToFile(string filename)
          index += 1;
       }
 
-      outputfile << "Total flights: " << totalFlights << endl;
-      outputfile << "Total additional stops: " + to_string(this->getStops()) << endl;
+      outputfile << "Total flights: " << to_string(totalFlights) << endl;
+      outputfile << "Total additional stops: " + to_string(totalStops) << endl;
       outputfile << "Optimality Criteria: Flights" << endl;
       outputfile.close();
    }

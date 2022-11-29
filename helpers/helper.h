@@ -42,27 +42,30 @@ double rad2deg(double rad)
   return (rad * 180.0 / M_PI);
 }
 
-bool isContains(deque<Vertex *> q, Vertex *node)
-{
-  while (!q.empty())
-  {
-    if (q.front()->getAirport()->getIataCode() == node->getAirport()->getIataCode() && q.front()->getAirline()->getIataCode() == node->getAirline()->getIataCode())
-    {
-
-      cout << "ignoring insertion child is already on frontier" << endl;
-      return true;
-    }
-    q.pop_front();
-  }
-
-  return false;
-}
-
 bool isNull(Vertex *node)
 {
   if (node->getParent() == NULL)
   {
     return true;
+  }
+  return false;
+}
+
+string delSpaces(string &str)
+{
+  str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
+  return str;
+}
+
+bool contains(Vertex *node, deque<Vertex *> frontier)
+{
+  for (auto &vert : frontier)
+  {
+    if (node == vert)
+    {
+      cout << "ignoring adding to frontier: child is already on the frontier";
+      return true;
+    }
   }
   return false;
 }

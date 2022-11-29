@@ -1,0 +1,5 @@
+1. N/A from TKD to ACC  stops
+2. 5G from ACC to KMS
+Total flights: 2
+Total additional stops: 0
+Optimality Criteria: Flights
