@@ -25,6 +25,10 @@ public:
     list<Route *> getNeighborPaths(Airport *airport);
     Vertex *getFlightRoutesByBFS(Airport *source, Airport *destination);
     FlightRouteSearcher getRouteSearcher();
+    ~FlightRoutes()
+    {
+        cout << "Flight routes was destructed" << endl;
+    }
 
 private:
     string inputFileName;

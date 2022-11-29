@@ -1,5 +1,5 @@
-1. ME from ACC to BEY
-2. FZ from BEY to DWC
+1. W3 from IBA to ABV
+2. W3 from ABV to ACC
 Total flights: 2
 Total additional stops: 0
 Optimality Criteria: Flights

@@ -4,11 +4,10 @@ using namespace std;
 
 int main()
 {
-  FlightRoutes test("accra-abuja.txt");
+  FlightRoutes test("london-dubai.txt");
   test.getStartAndEndDetails();
-  cout << "Test for flight route with pointers --------------------------------" << endl;
+  cout << "Test Searching for flight route with pointers --------------------------------" << endl;
   unordered_map<string, Airport *> search = test.getSourceAndDestinationAirportDetails();
-  // cout << search["destination"]->getName() << endl;
   Vertex *nodeP = test.getFlightRoutesByBFS(search["source"], search["destination"]);
   exit(0);
 

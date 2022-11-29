@@ -26,6 +26,11 @@ public:
    void writeToFile(string filename);
    int getStops();
 
+   ~Vertex()
+   {
+      cout << "vertex class was destructed" << endl;
+   }
+
    bool operator==(Vertex *rhs)
    {
       return this->getAirline()->getIataCode() == rhs->getAirline()->getIataCode();
@@ -41,4 +46,5 @@ public:
       return "{Node with airline" + airline->getAirlineName() + " iatacode = " + airport->getIataCode() + " airport id = " + to_string(airport->getAirportId()) + "}";
    }
 };
+
 #endif

@@ -37,11 +37,6 @@ void Route::setDestinationAirportId(string destinationAirportId)
   this->destinationAirportId = destinationAirportId;
 }
 
-void Route::setCodeshare(bool codeshare)
-{
-  this->codeshare = codeshare;
-}
-
 void Route::setStops(int stops)
 {
   this->stops = stops;
@@ -70,11 +65,6 @@ string Route::getdestinationAirportCode()
 string Route::getdestinationAirportId()
 {
   return this->destinationAirportId;
-}
-
-bool Route::getCodeshare()
-{
-  return this->codeshare;
 }
 
 int Route::getStops()

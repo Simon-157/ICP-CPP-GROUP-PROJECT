@@ -1,11 +1,7 @@
 #include <cmath>
-#include <sstream>
-#include <fstream>
 #include <algorithm>
-#include <list>
 #include <cstdio>
 #include <bits/stdc++.h>
-#include <stack>
 #include "FlightRoutes.h"
 #include <regex>
 using namespace std;
@@ -57,11 +53,11 @@ string delSpaces(string &str)
   return str;
 }
 
-bool contains(Vertex *node, deque<Vertex *> frontier)
+bool contains(Vertex *vertex, deque<Vertex *> container)
 {
-  for (auto &vert : frontier)
+  for (Vertex *vert : container)
   {
-    if (node == vert)
+    if (vert == vertex)
     {
       cout << "ignoring adding to frontier: child is already on the frontier";
       return true;

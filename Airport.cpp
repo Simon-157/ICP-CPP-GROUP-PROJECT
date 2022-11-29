@@ -1,5 +1,8 @@
 #include "helpers/Airport.h"
 
+/**
+ * A constructor for the Airport class.
+ */
 Airport::Airport()
 {
   this->airportId;
@@ -12,6 +15,9 @@ Airport::Airport()
   this->longitude;
 }
 
+/**
+ * The Airport constructor takes in 6 parameters and assigns them to the corresponding member variables
+ */
 Airport::Airport(int airportId, string name, string city, string country, string iataCode, string icaoCode)
 {
   this->airportId = airportId;
@@ -22,6 +28,9 @@ Airport::Airport(int airportId, string name, string city, string country, string
   this->icaoCode = iataCode;
 }
 
+/**
+ * This function is a constructor for the Airport class
+ */
 Airport::Airport(int airportId, string name, string city, string country, string iataCode, string icaoCode, double latitude, double longitude)
 {
   this->airportId = airportId;
@@ -34,6 +43,10 @@ Airport::Airport(int airportId, string name, string city, string country, string
   this->longitude = longitude;
 }
 
+
+/**
+ * SETTERS AND GETTERS IMPLEMENTATION
+ */
 void Airport::setAirport(int airportId)
 {
   this->airportId = airportId;

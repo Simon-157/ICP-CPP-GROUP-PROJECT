@@ -1,5 +1,5 @@
-1. ME from ACC to BEY
-2. FZ from BEY to DWC
+1. 2B from \N to DME
+2. UN from DME to DWC
 Total flights: 2
 Total additional stops: 0
 Optimality Criteria: Flights

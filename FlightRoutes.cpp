@@ -12,12 +12,19 @@ FlightRouteSearcher FlightRoutes::getRouteSearcher()
 	return this->routeSearcher;
 }
 
+/**
+ * This function is the constructor for the FlightRoutes class
+ * @param inputFileName The name of the file that contains the flight routes.
+ */
 FlightRoutes::FlightRoutes(string inputFileName)
 {
 	this->inputFileName = inputFileName;
 	this->routeSearcher;
 }
 
+/**
+ * It reads the first two lines of the input file and sets the start and end cities and countries
+ */
 void FlightRoutes::getStartAndEndDetails()
 {
 
@@ -49,6 +56,10 @@ void FlightRoutes::getStartAndEndDetails()
 	this->routeSearcher.setDestinationCountry(result[3]);
 }
 
+/**
+ * It reads the airports.csv file and returns a map of source and destination airports
+ * @return A map of source and destination airports
+ */
 unordered_map<string, Airport *> FlightRoutes::getSourceAndDestinationAirportDetails()
 {
 	unordered_map<string, Airport *> SourceEndAirports;
@@ -90,6 +101,12 @@ unordered_map<string, Airport *> FlightRoutes::getSourceAndDestinationAirportDet
 	return SourceEndAirports;
 }
 
+/**
+ * It takes in a string airportCode and string airportId and returns an Airport object
+ * @param airportCode The IATA code of the airport.
+ * @param airportId The unique identifier of the airport.
+ * @return A pointer to an Airport object.
+ */
 Airport *FlightRoutes::getAirportByIataCode(string airportCode, string airportId)
 {
 
@@ -101,7 +118,7 @@ Airport *FlightRoutes::getAirportByIataCode(string airportCode, string airportId
 	{
 		while (getline(airportsData, line))
 		{
-			line.erase(remove(line.begin(), line.end(), ' '), line.end());
+
 			stringstream ss(line);
 			getline(ss, currentAirportId, ',');
 			getline(ss, currentAirportName, ',');
@@ -131,6 +148,14 @@ Airport *FlightRoutes::getAirportByIataCode(string airportCode, string airportId
 	return NULL;
 }
 
+/**
+ * It takes in a string airlineCode and string airlineId and returns an Airline object
+ *
+ * @param airlineCode The IATA code of the airline.
+ * @param airlineId The airline's unique OpenFlights identifier.
+ *
+ * @return A pointer to an Airline object.
+ */
 Airline *FlightRoutes::getAirlineByIataCode(string airlineCode, string airlineId)
 {
 
@@ -170,6 +195,11 @@ Airline *FlightRoutes::getAirlineByIataCode(string airlineCode, string airlineId
 	return NULL;
 }
 
+/**
+ * It takes an airport as a parameter and returns a list of routes that are connected to that airport
+ * @param airport The airport object that we want to find the neighbors of.
+ * @return A list of routes that are connected to the airport
+ */
 list<Route *> FlightRoutes::getNeighborPaths(Airport *airport)
 {
 	list<Route *> neighborRoutes;
@@ -181,7 +211,7 @@ list<Route *> FlightRoutes::getNeighborPaths(Airport *airport)
 	{
 		while (getline(routesData, line))
 		{
-			line.erase(remove(line.begin(), line.end(), ' '), line.end());
+
 			stringstream ss(line);
 			getline(ss, currentAirlineCode, ',');
 			getline(ss, currentAirlineId, ',');
@@ -211,8 +241,16 @@ list<Route *> FlightRoutes::getNeighborPaths(Airport *airport)
 	return neighborRoutes;
 }
 
+/**
+ * The function takes in a source and destination airport and returns a vertex that contains the path
+ * from the source to the destination
+ * @param source The starting airport
+ * @param destination The destination airport
+ * @return A Vertex object
+ */
 Vertex *FlightRoutes::getFlightRoutesByBFS(Airport *source, Airport *destination)
 {
+	string filen = this->getRouteSearcher().getStartCity() + "-" + this->getRouteSearcher().getDestinationCity();
 	cout << "destination code: " << destination->getIataCode() << endl;
 	deque<Vertex *> frontier;
 	frontier.push_back(new Vertex(source));
@@ -222,13 +260,20 @@ Vertex *FlightRoutes::getFlightRoutesByBFS(Airport *source, Airport *destination
 	{
 		Vertex *current = frontier.front();
 		frontier.pop_front();
-		if (current->getAirport() == nullptr)
+		if (current->getAirport()->getIataCode() == destination->getIataCode())
+		{
+			cout << "Found solution ! " << endl;
+			cout << current->getAirport()->getName() << endl;
+			transform(filen.begin(), filen.end(), filen.begin(), ::tolower);
+			current->writeToFile(filen);
+			return current;
+		}
+		if (!frontier.empty() && current->getAirport() == nullptr)
 		{
 			cout << "A node is null" << endl;
-			current = frontier.front();
-			frontier.pop_front();
 			return NULL;
 		}
+
 		cout << "popped  node " << current->getAirport()->getName() << endl;
 		explored.insert(current->getAirport()->getIataCode());
 		for (Route *route : getNeighborPaths(current->getAirport()))
@@ -246,25 +291,17 @@ Vertex *FlightRoutes::getFlightRoutesByBFS(Airport *source, Airport *destination
 
 					cout << "Found solution ! " << endl;
 					cout << child->getAirport()->getName() << endl;
-					string filen = this->getRouteSearcher().getStartCity() + "-" + this->getRouteSearcher().getDestinationCity();
 					transform(filen.begin(), filen.end(), filen.begin(), ::tolower);
 					child->writeToFile(filen);
 
 					return child;
 				}
 
-				if (current->getAirport() == nullptr)
-				{
-					cout << "A node is null" << endl;
-					continue;
-				}
-
-				else if (!contains(child, frontier))
+				if (!contains(child, frontier) || explored.find(child->getAirport()->getIataCode()) == explored.end())
 				{
 					frontier.push_back(child);
 				}
 			}
-			// }
 			catch (const exception &e)
 			{
 				cout << "error finding path to destination" << endl;

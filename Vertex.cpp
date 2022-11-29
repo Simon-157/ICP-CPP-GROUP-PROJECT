@@ -38,6 +38,11 @@ Vertex *Vertex::getParent()
    return parent;
 }
 
+/**
+ * The function returns a stack of vertices that represents the path from the current vertex to the
+ * start vertex
+ * @return A stack of Vertex pointers.
+ */
 stack<Vertex *> Vertex::getSolutionPath()
 {
    Vertex *currentVertex = this;
@@ -50,6 +55,11 @@ stack<Vertex *> Vertex::getSolutionPath()
    return soln;
 }
 
+
+/**
+ * It takes a stack of vertices and writes them to a file
+ * @param filename the name of the file to write to
+ */
 void Vertex::writeToFile(string filename)
 {
    cout << "------------" << endl
