@@ -65,3 +65,15 @@ bool contains(Vertex *vertex, deque<Vertex *> container)
   }
   return false;
 }
+
+bool nodeInExplored(unordered_set<Vertex *> explored, Vertex *child)
+{
+  for (Vertex *vert : explored)
+  {
+    if (vert == child)
+    {
+      return true;
+    }
+  }
+  return false;
+}

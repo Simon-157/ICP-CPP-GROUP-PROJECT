@@ -254,50 +254,34 @@ Vertex *FlightRoutes::getFlightRoutesByBFS(Airport *source, Airport *destination
 	cout << "destination code: " << destination->getIataCode() << endl;
 	deque<Vertex *> frontier;
 	frontier.push_back(new Vertex(source));
-	unordered_set<string> nullRoutes;
-	unordered_set<string> explored;
+	unordered_set<Vertex *> explored;
 	while (!frontier.empty())
 	{
 		Vertex *current = frontier.front();
 		frontier.pop_front();
-		if (current->getAirport()->getIataCode() == destination->getIataCode())
+		if (current->getAirport() == NULL)
 		{
-			cout << "Found solution ! " << endl;
-			cout << current->getAirport()->getName() << endl;
-			transform(filen.begin(), filen.end(), filen.begin(), ::tolower);
-			current->writeToFile(filen);
-			return current;
+			cout << "A node is null, ignoring path" << endl;
+			current = frontier.front();
+			frontier.pop_front();
 		}
-		if (!frontier.empty() && current->getAirport() == nullptr)
-		{
-			cout << "A node is null" << endl;
-			return NULL;
-		}
-
-		cout << "popped  node " << current->getAirport()->getName() << endl;
-		explored.insert(current->getAirport()->getIataCode());
+		explored.insert(current);
 		for (Route *route : getNeighborPaths(current->getAirport()))
 		{
 			try
 			{
-				// if (route != NULL)
-				// {
 				Airport *neighborFlight = getAirportByIataCode(route->getdestinationAirportCode(),
 																			  route->getdestinationAirportId());
 				Airline *neighborAirline = getAirlineByIataCode(route->getAirlineCode(), route->getAirlineId());
 				Vertex *child = new Vertex(current, neighborFlight, neighborAirline, route->getStops());
 				if (route->getdestinationAirportCode() == destination->getIataCode())
 				{
-
 					cout << "Found solution ! " << endl;
-					cout << child->getAirport()->getName() << endl;
 					transform(filen.begin(), filen.end(), filen.begin(), ::tolower);
 					child->writeToFile(filen);
-
 					return child;
 				}
-
-				if (!contains(child, frontier) || explored.find(child->getAirport()->getIataCode()) == explored.end())
+				if (!contains(child, frontier) && !nodeInExplored(explored, child))
 				{
 					frontier.push_back(child);
 				}
@@ -310,7 +294,11 @@ Vertex *FlightRoutes::getFlightRoutesByBFS(Airport *source, Airport *destination
 		}
 		cout << "a cycle ends" << endl;
 	}
-
 	cout << "Sorry no solution was found" << endl;
+	for (Vertex *vert : frontier)
+	{
+		delete vert;
+	}
+	frontier.clear();
 	return NULL;
 }
